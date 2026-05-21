@@ -2,7 +2,7 @@
 
 A C simulation of a quadcopter with a well-tuned **Altitude PID controller** and live visualization.
 
-More details on my website: <a href="https://andrearossetti.me/projects/pid-controller.html" target="_blank">andrearossetti.me</a>
+More details on my website: <a href="https://andrearossetti.me/page.html?src=projects/pid-controller.md" target="_blank">andrearossetti.me</a>
 
 ## Features
 
