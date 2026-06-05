@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "pid.h"
+#include "pid/pid.h"
 
 typedef struct {
         float x, y, z;

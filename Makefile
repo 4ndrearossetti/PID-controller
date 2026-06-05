@@ -1,46 +1,40 @@
 # Makefile
 
-# Compiler
-CC = gcc
+CC      = gcc
+CFLAGS  = -Wall -Wextra -O2
+LIBS    =
 
-# Compiler flags
-CFLAGS = -Wall -Wextra -O2
+TARGET  = main
 
-# Libraries
-LIBS = 
+# Automatically find all .c files under src/ (including subdirectories)
+SRCS := $(shell find src -name '*.c')
 
-# Target executable
-TARGET = main
-
-# Source files
-SRCS = main.c pid.c
-
-# Object files (in build/)
-OBJS = $(SRCS:%.c=build/%.o)
+# Convert src/.../file.c → build/.../file.o
+OBJS := $(patsubst src/%.c,build/%.o,$(SRCS))
 
 # Default target
 all: build/$(TARGET)
 
-# Create build directory
+# Create build directory if needed
 build:
 	@mkdir -p build
 
-# Mark 'build' as not a real file
-.PHONY: build all clean run
+.PHONY: all clean run
 
-# Linking the target executable
+# Link the final executable
 build/$(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o build/$(TARGET) $(LIBS)
+	$(CC) $(OBJS) -o $@ $(LIBS)
 
-# Compiling source files
-build/%.o: %.c | build
+# Compile .c files → .o files (supports subdirectories)
+build/%.o: src/%.c | build
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean up
+# Clean build artifacts
 clean:
 	rm -rf build flight_log.csv
 
-# Run the program
+# Build and run
 run: build/$(TARGET)
 	@./build/$(TARGET)
 
