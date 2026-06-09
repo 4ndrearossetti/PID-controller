@@ -2,39 +2,53 @@
 
 CC      = gcc
 CFLAGS  = -Wall -Wextra -O2
-LIBS    =
+LIBS    = -lm
 
 TARGET  = main
 
-# Automatically find all .c files under src/ (including subdirectories)
+# All project sources live in src/
 SRCS := $(shell find src -name '*.c')
-
-# Convert src/.../file.c → build/.../file.o
 OBJS := $(patsubst src/%.c,build/%.o,$(SRCS))
+
+# Module objects = everything except the app's main.o
+# (so tests can link against modules without colliding with main())
+MODULE_OBJS := $(filter-out build/main.o,$(OBJS))
+
+# Tests live in tests/, one executable per file
+TEST_SRCS    := $(wildcard tests/test_*.c)
+TEST_TARGETS := $(patsubst tests/%.c,build/%,$(TEST_SRCS))
+
+.PHONY: all clean run test build
 
 # Default target
 all: build/$(TARGET)
 
-# Create build directory if needed
 build:
 	@mkdir -p build
-
-.PHONY: all clean run
 
 # Link the final executable
 build/$(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $@ $(LIBS)
 
-# Compile .c files → .o files (supports subdirectories)
+# Compile project .c → .o (supports subdirectories under src/)
 build/%.o: src/%.c | build
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean build artifacts
-clean:
-	rm -rf build flight_log.csv
+# Compile and link each test against all modules.
+# Tests include module headers as "../src/quad.h" etc.
+build/test_%: tests/test_%.c $(MODULE_OBJS) | build
+	$(CC) $(CFLAGS) -Isrc $< $(MODULE_OBJS) -o $@ $(LIBS)
 
-# Build and run
+test: $(TEST_TARGETS)
+	@echo "── Running tests ──"
+	@for t in $(TEST_TARGETS); do echo ""; echo "  $$t"; ./$$t || exit 1; done
+	@echo ""
+	@echo "── All tests passed ──"
+
 run: build/$(TARGET)
 	@./build/$(TARGET)
+
+clean:
+	rm -rf build flight_log.csv
 

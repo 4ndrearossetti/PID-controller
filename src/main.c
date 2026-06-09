@@ -1,22 +1,10 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "pid/pid.h"
+#include "quad.h"
+#include "pid.h"
 
-typedef struct {
-        float x, y, z;
-        float vx, vy, vz;
-        float roll, pitch, yaw;
-        float p, q, r;
-} QuadState;
-
-#define GRAVITY         9.81f           // m/s²
-#define MASS            0.25f           // kg
-#define ARM_LENGTH      0.2f            // meters (center to motor)
-#define THRUST_FACTOR   0.005f          // motor_cmd → Newtons
-#define TORQUE_FACTOR   0.000001f       // differential → torque
-#define Ixx             0.01f           // kg·m²
-#define Iyy             0.01f
-#define Izz             0.02f
+#define THRUST_FACTOR   0.005f                          // motor_cmd → Newtons
+#define TORQUE_FACTOR   0.000001f                       // differential → torque
 
 #define DEG_TO_RAD(deg) ((deg) * 0.01745329252f)
 #define RAD_TO_DEG(rad) ((rad) * 57.2957795131f)
