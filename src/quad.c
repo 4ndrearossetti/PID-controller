@@ -2,7 +2,7 @@
 #include "quad.h"
 
 #define YAW_TORQUE_RATIO 0.03f
-#define MAX_TILT         0.45f   // 0.45rad ~ 25°
+// #define MAX_TILT         0.45f   // 0.45rad ~ 25°
 
 void quad_step(QuadState* s, const float F[4], float dt) {
         // Total thrust + body-frame torques
@@ -49,9 +49,9 @@ void quad_step(QuadState* s, const float F[4], float dt) {
 
         // Constraints
         if (s->z > 0.0f) { s->z  = 0.0f; s->vz = 0.0f; }
-        if (s->roll  >  MAX_TILT) s->roll  =  MAX_TILT;
-        if (s->roll  < -MAX_TILT) s->roll  = -MAX_TILT;
-        if (s->pitch >  MAX_TILT) s->pitch =  MAX_TILT;
-        if (s->pitch < -MAX_TILT) s->pitch = -MAX_TILT;
+//        if (s->roll  >  MAX_TILT) s->roll  =  MAX_TILT;
+//        if (s->roll  < -MAX_TILT) s->roll  = -MAX_TILT;
+//        if (s->pitch >  MAX_TILT) s->pitch =  MAX_TILT;
+//        if (s->pitch < -MAX_TILT) s->pitch = -MAX_TILT;
 }
 
