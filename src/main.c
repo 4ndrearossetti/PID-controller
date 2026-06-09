@@ -1,15 +1,3 @@
-/*
-  ╔══════════════════════════════════════════════════════════════════╗
-  ║  STALE — this file is the OLD altitude-only demo.              ║
-  ║  It still calls pid_update with now_ms as dt (wrong for the     ║
-  ║  new dt-based PID API). It doesn't use the mixer module.        ║
-  ║                                                                ║
-  ║  This file will be replaced when control.h/control.c is built   ║
-  ║  with the cascaded angle→rate architecture. Don't invest time   ║
-  ║  fixing it — build the new simulation instead.                  ║
-  ╚══════════════════════════════════════════════════════════════════╝
-*/
-
 #include <stdio.h>
 #include <unistd.h>
 #include "quad.h"
