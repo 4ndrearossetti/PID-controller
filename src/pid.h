@@ -20,6 +20,21 @@
   Caller passes dt explicitly. The controller does not track time; this
   keeps it usable at any loop rate (e.g. a cascade with a fast inner
   loop and a slow outer loop) without baking timing assumptions in.
+
+  Discretisation: forward Euler (integral_new used in the output
+  calculation, not the previous-step integral). This means:
+
+      output = Kp·e + Ki·(integral + e·dt) - Kd·(Δfeedback/dt)
+
+  The integrator update (integral += e·dt) is tentative; it only
+  commits if the anti-windup gate allows it. The priming call
+  (has_prev=0) returns P-only without touching the integral, so the
+  actuator doesn't see a stale zero on first engage.
+
+  Cascaded usage: in a pitch-angle→pitch-rate cascade, the outer
+  PID's output becomes the inner PID's setpoint. The outer PID
+  typically runs at 50–100 Hz, the inner at 200–400 Hz. This module
+  has no rate assumptions — the caller controls the call rate.
 */
 
 typedef struct {

@@ -13,9 +13,32 @@
 #define Izz             0.02f
 
 /* --- State --- */
+
+/*
+  Coordinate system: NED (North, East, Down)
+
+    +x   forward (North)
+    +y   left (East)
+    +z   down
+
+    roll    + = right roll (right side down)
+    pitch   + = nose up
+    yaw     + = CW from above
+
+    p   + = right roll rate
+    q   + = nose-up pitch rate
+    r   + = CW yaw rate
+
+  Hover: thrust balances gravity; altitude (up) is -z.
+  Ground constraint: z > 0 is below ground.
+
+  The sign chain through the entire control pipeline
+  (PID → mixer → quad dynamics) must be consistent with
+  this frame. If you change one link, you change them all.
+*/
 typedef struct {
-        float x, y, z;              // position
-        float vx, vy, vz;           // velocity
+        float x, y, z;              // position (m), NED
+        float vx, vy, vz;           // velocity (m/s), NED
         float roll, pitch, yaw;     // attitude (rad)
         float p, q, r;              // body rates (rad/s)
 } QuadState;
