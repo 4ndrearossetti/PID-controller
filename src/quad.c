@@ -16,14 +16,14 @@ void quad_step(QuadState* s, const float F[4], float dt) {
         float sp = sinf(s->pitch),      cp = cosf(s->pitch);
         float sy = sinf(s->yaw),        cy = cosf(s->yaw);
 
-        float Fx_world = F_total * (cy*sp*cr + sy*sr);
-        float Fy_world = F_total * (sy*sp*cr - cy*sr);
-        float Fz_world = F_total * (cp*cr);
+        float Fx_world = -F_total * (cy*sp*cr + sy*sr);
+        float Fy_world = -F_total * (sy*sp*cr - cy*sr);
+        float Fz_world = -F_total * (cp*cr);
 
         // Translational dynamics
         float ax = Fx_world / MASS;
         float ay = Fy_world / MASS;
-        float az = Fz_world / MASS - GRAVITY;
+        float az = Fz_world / MASS + GRAVITY;
 
         s->vx += ax * dt;
         s->vy += ay * dt;
@@ -48,7 +48,7 @@ void quad_step(QuadState* s, const float F[4], float dt) {
         s->yaw   += s->r * dt;
 
         // Constraints
-        if (s->z < 0.0f) { s->z  = 0.0f; s->vz = 0.0f; }
+        if (s->z > 0.0f) { s->z  = 0.0f; s->vz = 0.0f; }
         if (s->roll  >  MAX_TILT) s->roll  =  MAX_TILT;
         if (s->roll  < -MAX_TILT) s->roll  = -MAX_TILT;
         if (s->pitch >  MAX_TILT) s->pitch =  MAX_TILT;

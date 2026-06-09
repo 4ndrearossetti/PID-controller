@@ -30,7 +30,7 @@ typedef struct {
     motor_thrusts_N[1]  M2  rear-left    (CCW)
     motor_thrusts_N[2]  M3  front-left   (CW)
     motor_thrusts_N[3]  M4  rear-right   (CW)
- */
+*/
 void quad_step(QuadState* s, const float motor_thrusts_N[4], float dt);
 
 #endif
