@@ -49,6 +49,11 @@ test: $(TEST_TARGETS)
 run: build/$(TARGET)
 	@./build/$(TARGET)
 
+viz: build/$(TARGET)
+	@./build/$(TARGET)
+	@echo "── Launching 3D viz ──"
+	python3 viz3d.py
+
 clean:
 	rm -rf build flight_log.csv
 
