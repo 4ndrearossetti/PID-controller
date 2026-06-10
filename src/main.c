@@ -13,8 +13,8 @@
 #define SCENARIO_ROLL_ANGLE_STEP 0
 #define SCENARIO_PITCH_STEP      0
 #define SCENARIO_YAW_RATE_STEP   0
-#define SCENARIO_ALTITUDE_STEP   1
-#define SCENARIO_FULL_FLIGHT     0
+#define SCENARIO_ALTITUDE_STEP   0
+#define SCENARIO_FULL_FLIGHT     1
 
 /* ────────────────────────────────────────────────────────────────── */
 /*  Gains — edit these to tune.                                       */
@@ -22,34 +22,34 @@
 /* ────────────────────────────────────────────────────────────────── */
 
 /* Altitude (single loop): meters → Newtons */
-#define KP_ALT          0.0f
-#define KI_ALT          0.0f
-#define KD_ALT          0.0f
+#define KP_ALT          30.0f
+#define KI_ALT          16.0f
+#define KD_ALT          6.0f
 
 /* Roll angle outer (cascade): rad → rad/s */
-#define KP_ROLL_ANG     0.0f
-#define KI_ROLL_ANG     0.0f
-#define KD_ROLL_ANG     0.0f
+#define KP_ROLL_ANG     12.0f
+#define KI_ROLL_ANG     2.0f
+#define KD_ROLL_ANG     0.4f
 
 /* Roll rate inner (cascade): rad/s → N (differential) */
-#define KP_ROLL_RATE    0.0f
-#define KI_ROLL_RATE    0.0f
-#define KD_ROLL_RATE    0.0f
+#define KP_ROLL_RATE    1.2f
+#define KI_ROLL_RATE    0.5f
+#define KD_ROLL_RATE    0.008f
 
 /* Pitch angle outer: rad → rad/s */
-#define KP_PITCH_ANG    0.0f
-#define KI_PITCH_ANG    0.0f
-#define KD_PITCH_ANG    0.0f
+#define KP_PITCH_ANG    12.0f
+#define KI_PITCH_ANG    2.0f
+#define KD_PITCH_ANG    0.4f
 
 /* Pitch rate inner: rad/s → N (differential) */
-#define KP_PITCH_RATE   0.0f
-#define KI_PITCH_RATE   0.0f
-#define KD_PITCH_RATE   0.0f
+#define KP_PITCH_RATE   1.2f
+#define KI_PITCH_RATE   0.5f
+#define KD_PITCH_RATE   0.008f
 
 /* Yaw rate (single loop): rad/s → N (differential) */
-#define KP_YAW_RATE     0.0f
-#define KI_YAW_RATE     0.0f
-#define KD_YAW_RATE     0.0f
+#define KP_YAW_RATE     10.0f
+#define KI_YAW_RATE     3.0f
+#define KD_YAW_RATE     0.05f
 
 /* ────────────────────────────────────────────────────────────────── */
 /*  Output limits — set once from physics, don't tune.                */
@@ -66,7 +66,7 @@
 /*  Simulation parameters                                             */
 /* ────────────────────────────────────────────────────────────────── */
 #define DT              0.005f       /* 200 Hz */
-#define SIM_DURATION_S  10.0f
+#define SIM_DURATION_S  20.0f
 #define TOTAL_STEPS     ((int)(SIM_DURATION_S / DT))
 
 /* Print to terminal every N steps (20 Hz at 200 Hz sim) */
@@ -116,10 +116,10 @@ static Setpoints get_setpoints(float t) {
 
 #if SCENARIO_FULL_FLIGHT
     if (t > 1.0f) sp.altitude = 1.0f;
-    if (t > 3.0f) sp.roll     = 0.15f;
-    if (t > 4.5f) sp.pitch    = 0.15f;
-    if (t > 6.0f) sp.yaw_rate = 0.5f;
-    if (t > 8.0f) { sp.roll = 0.0f; sp.pitch = 0.0f; sp.yaw_rate = 0.0f; }
+    if (t > 4.0f) sp.roll     = 0.15f;
+    if (t > 8.0f) sp.pitch    = 0.15f;
+    if (t > 12.0f) sp.yaw_rate = 0.5f;
+    if (t > 16.0f) { sp.roll = 0.0f; sp.pitch = 0.0f; sp.yaw_rate = 0.0f; }
 #endif
 
     return sp;
