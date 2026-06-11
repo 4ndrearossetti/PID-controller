@@ -10,7 +10,6 @@ More details on my website: <a href="https://andrearossetti.me/projects/pid-cont
 - Single-axis PID controller with conditional-integration anti-windup
 - Standard X-frame mixer (control commands → 4 motor thrusts)
 - Cascaded control architecture (inner rate loop, outer angle loop)
-- Wind gust disturbance testing (simulates combat/explosion hits)
 - Modular C codebase with separate tests per module
 - 3D visualisation with matplotlib3D
 
