@@ -28,4 +28,4 @@ build/
 
 # Python venv
 venv/
-
+__pycache__/
