@@ -1,5 +1,3 @@
-Work in progress - README to be updated
-
 # Quadcopter PID Flight Controller Simulation
 
 A C simulation of a quadcopter with a well-tuned **Altitude PID controller** and live visualization.
