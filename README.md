@@ -71,7 +71,18 @@ Press any key after the simulation ends to close the plot window.
 - **Sensor integration** — complementary filter (MPU-6050), then EKF
 - **ESP32 target** — move from sim to hardware
 
-## Demo Video
+## Demo
+
+The flight scenario is 20 seconds, with these phases:
+
+| Time | Command | What the drone does |
+|------|---------|---------------------|
+| 0–1 s | nothing | Sits on the ground at altitude 0, all angles zero |
+| 1–4 s | altitude = 1 m | Climbs straight up to 1 m, settles |
+| 4–8 s | roll = 0.15 rad (~8.6°) | Banks right while holding altitude |
+| 8–12 s | pitch = 0.15 rad (~8.6°) | Pitches nose up *while still banked*, now tilted in both axes |
+| 12–16 s | yaw_rate = 0.5 rad/s (~29°/s) | Rotates CW continuously for 4 seconds (~2 full turns), while still banked and pitched — a coordinated turn |
+| 16–20 s | all commands back to zero | Returns to level hover at 1 m and stays there |
 
 ![](demo.gif)
 
