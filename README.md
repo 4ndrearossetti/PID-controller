@@ -2,6 +2,8 @@
 
 A C simulation of a quadcopter with a well-tuned **Altitude PID controller** and live visualization.
 
+More details on my website: <a href="https://andrearossetti.me/projects/pid-controller" target="_blank">andrearossetti.me</a>
+
 ## Features
 
 - Realistic 6-DOF physics engine (NED frame: X forward, Y left, Z down)
